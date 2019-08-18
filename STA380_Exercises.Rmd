@@ -6,7 +6,7 @@ output: md_document
 # Group Member: Kelly Zhang, Rui Ying, He Wang
 
 ## Visual story telling part 1: green buildings
-Step1:filter out the builidng with leasing rate less than 10% 
+Step1: Filter out the builidng with leasing rate less than 10% 
 ```{r}
 library(tidyverse)
 library(ggplot2)
@@ -14,12 +14,12 @@ df_greenbuildings <- read.csv("greenbuildings.csv")
 df_greenbuildings <- df_greenbuildings[(df_greenbuildings$leasing_rate > 10),]
 ```
 
-Step2:plot size versus rent to see if the rent affect by size. The scatter plot shows that as the the size increase, the rent increases as well. 
+Step2: Plot size versus rent to see if the rent affect by size. The scatter plot shows that as the the size increase, the rent increases as well. 
 ```{r}
 ggplot(data = df_greenbuildings) + geom_point(aes(x=size, y=Rent, color = factor(green_rating))) +theme_bw()
 ```
 
-Step3:filter the data by size. Since the building we plan to build is 250,000 square feet, buildings with size between 200,000 to 300,000 square feet are good approximations for our analysis. A boxplot is then created to show the distribution of rent for buildings with size between 200,000 to 300,000 square feet and surprisingly the non-green actually slightly outperforms green buildings in rent price for size from 200000 to 250000.
+Step3: Filter the data by size. Since the building we plan to build is 250,000 square feet, buildings with size between 200,000 to 300,000 square feet are good approximations for our analysis. A boxplot is then created to show the distribution of rent for buildings with size between 200,000 to 300,000 square feet and surprisingly the non-green actually slightly outperforms green buildings in rent price for size from 200000 to 250000.
 ```{r}
 df_greenbuildings <-df_greenbuildings[df_greenbuildings$size > 200000 & df_greenbuildings$size < 300000,]
 ```
@@ -34,24 +34,24 @@ df_greenbuildings <- df_greenbuildings %>% mutate(agecut = cut(age, c(-1,15,30,6
 ggplot(data= df_greenbuildings) + geom_boxplot(aes(x = agecut, y = df$Rent,fill=factor(green_rating))) +theme_bw()
 ```
 
-Step5: by plotting the stories verusu rent, we see a clear trend of increase in rent as the number of stories increase
+Step5: By plotting the stories verusu rent, we see a clear trend of increase in rent as the number of stories increase
 ```{r}
 ggplot(data = df_greenbuildings) + geom_point(aes(x=stories, y=Rent, color = factor(green_rating)))
 ```
 
-Step6:as we only care about the rent for the buildings that are similar to the one we are investing, the average rent for the buildings with 10-20 stories is higher for non-green versus green
+Step6: Since we only care about the rent for the buildings that are similar to the one we are investing, the average rent for the buildings with 10-20 stories is higher for non-green versus green
 ```{r}
 df1<- df_greenbuildings%>%mutate(storiescut = cut(stories, c(0,10,20,30,40)))
 ggplot(data = df1) + geom_boxplot(aes(x= storiescut, y=Rent, fill = factor(green_rating)))+ theme_bw()
 ```
 
-step7: combine the effect of age and stories variable by filter out the buildings with age greater than 30 and stories less than 10 and greater than 20. 
+step7: Combine the effect of age and stories variable by filter out the buildings with age greater than 30 and stories less than 10 and greater than 20. 
 ```{r}
 df_greenbuildings <- df_greenbuildings[df_greenbuildings$age >-1 & df_greenbuildings$age<30,]
 df_greenbuildings <- df_greenbuildings[df_greenbuildings$stories >10 & df_greenbuildings$stories<20,]
 ```
 
-Step8: the fianl average of leasing rate for green buildings is 87.12074%, while the leasing rate for non-green buildings is 90.22357%. However, the rent is much higher for non-green buildings after counting the effect of size, age and stories, which is 35.39262 and for green building is 30.77000. 
+Step8: The fianl average of leasing rate for green buildings is 87.12074%, while the leasing rate for non-green buildings is 90.22357%. However, the rent is much higher for non-green buildings after counting the effect of size, age and stories, which is 35.39262 and for green building is 30.77000. 
 
 Revenue = Building size(250,000) * Leasing Rate * Rent Per Square Feet
 Expense for Non-green is 100 million, and for green is 105 million
@@ -75,7 +75,8 @@ airline$DayOfWeek = as.factor(airline$DayOfWeek)
 #Filter the data of flights that departure from Austin 
 From = airline[airline$Origin == 'AUS',]
 ```
-overall We can see the volume of the flights from Austin to other city went down towards the end of the years.
+
+Overall we can see the volume of the flights from Austin to other city went down towards the end of the years.
 ```{r}
 # Trun delay into categorical variable 
 From$delay = ifelse(From$ArrDelay >=1,0,1)
@@ -90,7 +91,8 @@ ggplot(From_count)+
   geom_bar(stat = 'identity',aes(x = Month, y = flight_count))+
   ggtitle("Flight volume per month")+theme(plot.title = element_text(hjust = 0.5))
 ```
-Looking into it further we can see that even though june has the most flight volume, june has the lowest delay count. On the other hand September to November has the highest delay rate despite the fact that the flight volume are on the lower side.
+
+Looking into it further we can see that even though June has the most flight volume, June has the lowest delay count. On the other hand September to November has the highest delay rate despite the fact that the flight volume are on the lower side.
 ```{r}
 #grouped data by month and delays and count the delays in each month
 From_dely = From %>%
@@ -127,7 +129,7 @@ ggplot(sum_time)+
   ggtitle("Trend in delays on time of the day")+theme(plot.title = element_text(hjust = 0.5))
 ```
 
-Now lets look at the average time of day in each time of the day. We see that the longest delays happens in the evening and the shortest happens in late night. if you leave on evning there are about 50% of chance that the flight delays for about 60 minutes.
+Now lets look at the average time of day in each time of the day. We see that the longest delays happens in the evening and the shortest happens in late night. If you leave on evning there are about 50% of chance that the flight delays for about 60 minutes.
 ```{r}
 # grouped by time frame and calculated average time 
 sum_time1 = na.omit(From) %>%
@@ -138,8 +140,7 @@ ggplot(sum_time1)+
   ggtitle("Average time of Delay (Time of the Day)")+theme(plot.title = element_text(hjust = 0.5))
 ```
 
-Now lets see which day has the worst. overall either one of the day there are more probablity of delay then on time. However the worst day to go is saturday. 
-
+Now lets see which day has the worst. Overall either one of the day there are more probablity of delay than on time. However the worst day to go is saturday. 
 ```{r}
 # changed dat of week in to words
 From$name = NA
@@ -161,7 +162,8 @@ ggplot(sum_day)+
   geom_bar(stat = 'identity',aes(x = name, y = Day_count,fill = factor(delay)),position = 'dodge')+
   ggtitle("Delays in Day of the Week")+theme(plot.title = element_text(hjust = 0.5))
 ```
-The average time of delays seems pretty even amount different days of the week
+
+The average time of delays seems pretty even among different days of the week
 ```{r}
 #grouped by names and calculated average time 
 sum_day1 = na.omit(From) %>%
@@ -173,6 +175,7 @@ ggplot(sum_day1)+
   ggtitle("Average time of delays in Day of the Week")+theme(plot.title = element_text(hjust = 0.5))
 
 ```
+
 From the plot we can see WN has most the flights but also have a pretty high delay rate. OH is the only carrier that has a higher on time rate than delay rate, but they also have a very small number of flights. Time wise US has the lowest average delay time, OH and F9 has some what lower average. Other carrier seems to be somewhat similar in terms of delay time. 
 ```{r}
 sum_car = From %>%
@@ -215,6 +218,7 @@ df5_5 = df5%>%mutate(delay_reason = "LateAircraftDelay")
 
 df <- rbind(df1_1,df2_2,df3_3,df4_4,df5_5)
 ```
+
 From the heatmap we can see, after taking out the early departure time, that evening is worst time to fly in terms of average time on delay.
 ```{r}
 h1 = From[,c("time_frame","DayOfWeek","ArrDelay")]
@@ -223,7 +227,8 @@ h1 = h1%>% group_by(DayOfWeek,time_frame)%>%summarise(delay_mean = mean(ArrDelay
 h1 = na.omit(h1)
 ggplot(h1, aes(DayOfWeek, time_frame)) + geom_tile(aes(fill = delay_mean), colour = "white") + scale_fill_gradient(low = "white",high = "steelblue")
 ```
-If you can Aviod NW on Wednesday, it also shows that a lot of carriers tends to have longer delays over the weekends.
+
+If you can avoid NW on Wednesday, it also shows that a lot of carriers tends to have longer delays over the weekends.
 ```{r}
 h2 = From[,c("UniqueCarrier","DayOfWeek","ArrDelay")]
 h2 = h2[h2['ArrDelay']>=0,]
@@ -231,7 +236,8 @@ h2 = h2%>% group_by(DayOfWeek,UniqueCarrier)%>%summarise(delay_mean = mean(ArrDe
 h2 = na.omit(h2)
 ggplot(h2, aes(DayOfWeek, UniqueCarrier)) + geom_tile(aes(fill = delay_mean), colour = "white") + scale_fill_gradient(low = "white",high = "steelblue")
 ```
-As expected December have longer delays especailly on saturdays. Surprisingly, despite the fact that September to Novenmber has the mose delays, the average delay time was the shortest.
+
+As expected December have longer delays especailly on saturdays. Surprisingly, despite the fact that September to Novenmber has the most delays, the average delay time was the shortest.
 ```{r}
 h3 = From[,c("Month","DayOfWeek","ArrDelay")]
 h3 = h3[h3['ArrDelay']>=0,]
@@ -239,6 +245,7 @@ h3 = h3%>% group_by(DayOfWeek,Month)%>%summarise(delay_mean = mean(ArrDelay),n=n
 h3 = na.omit(h3)
 ggplot(h3, aes(Month,DayOfWeek)) + geom_tile(aes(fill = delay_mean), colour = "white") + scale_fill_gradient(low = "white",high = "steelblue")
 ```
+
 From the calender we can see December is where most of longer delay happens, maybe due to more people travel on the holidays. We see a particularly long delay on march the 18th so we looked up the date and see anything happened that day, it turns out that to be the last day of the SXSW. Understandably, since people come in different days but might all leave on the same day cuasing a lot of traffic. 
 ```{r}
 h4 = From[,c("Month","DayofMonth","ArrDelay")]
@@ -247,6 +254,7 @@ h4 = h4 %>% group_by(Month,DayofMonth)%>% summarise(day1_mean = mean(ArrDelay),n
 h4 = na.omit(h4)
 ggplot(h4, aes(Month,DayofMonth)) + geom_tile(aes(fill = day1_mean), colour = "white") + scale_fill_gradient(low = "white",high = "steelblue")
 ```
+
 Lastly we can plotted the reason of delays in each month, since a lot of data were missing, most of the cause was carrier delays and NASDelays.
 ```{r}
 h5 = df[,c("Month","delay_reason")]
@@ -254,7 +262,8 @@ h5 = h5 %>% group_by(Month,delay_reason)%>% summarise(n=n())
 h5 = na.omit(h5)
 ggplot(h5) + geom_bar(stat = 'identity', mapping = aes(x=Month,y=n,fill = delay_reason),position = 'dodge')
 ```
-Next time when you want to book for a flight, you can refer to these information to aviod delays or at least choose a time of shorter delay time.
+
+Conclusion: next time when you want to book for a flight, you can refer to these information to aviod delays or at least choose a time of shorter delay time.
 
 
 ## Portfolio modeling
@@ -433,7 +442,7 @@ pairs(all_returns_3)
 title('Correlationship between ETFs in portfolio 3',line=5)
 # all related. Because it is in the same industry
 plot(all_returns_3[,1], type='l')
-all_returns_3[,5]
+
 # Look at the portfolio_3 returns over time
 plot(all_returns_3[,5], type='l')
 
@@ -481,9 +490,7 @@ quantile(sim3[,n_days]- initial_wealth,.01)
 ```
 From the return and loss histogram, we know that the portfolio 3 is safer than portfolio 1 and 2, the most loss can only be 1500 and also the most earns can only less than 1200 approximately which follows the principle of low risk and low return. Also the correlationship between ETFs in porfolio 3, they have close relationship between each other since they are all issued by government agencies and varied simultaneously. For investors at 1% of risk preference, the value in risk is more than 1302.
 
-
-
-""# Step4: Combine VaR for three portfolios
+Step4: Combine VaR for three portfolios
 ```{r}
 # Combine VaR for three portfolios
 Portfolio_3 <- c(quantile(sim3[,n_days]- initial_wealth,.05), quantile(sim3[,n_days]- initial_wealth,.01))
@@ -503,7 +510,6 @@ From the VaR at 5% and 1% for these 3 portfolios, we can see that the porfolio 2
 Step 1: Find the correlationship between different interests
 ```{r readfile}
 tweet = read.csv("social_marketing.csv", na.strings = '')
-View(tweet)
 library(tidyverse) 
 library(cluster)   
 library(corrplot)
@@ -603,7 +609,8 @@ library(naivebayes)
 library(e1071)
 library(tidyverse)
 ```
-Step1. First  we created reader plain function to help us read the file. Then read the train and test datasets and create corpus for each sets.
+
+Step1: First we created reader plain function to help us read the file. Then read the train and test datasets and create corpus for each sets.
 ```{r}
 readerPlain = function(fname){
     readPlain(elem=list(content=readLines(fname)), 
@@ -617,7 +624,8 @@ doc_train = lapply(file_train, readerPlain)
 file_test = Sys.glob('ReutersC50/C50test/*/*.txt')
 doc_test = lapply(file_test, readerPlain)
 ```
-Step2.Go through each of the data and extract the author names 
+
+Step2: Go through each of the data and extract the author names 
 ```{r}
 mynames = file_train %>%
   { strsplit(., '/', fixed=TRUE) } 
@@ -636,7 +644,8 @@ for (i in mynames){
 }
 
 ```
-Step3. Creat corpus for both data sets, and also make everything to lowercase. Remove numbers, remove punctuations, remove all white spaces, and remove all the stop words.
+
+Step3: Create corpus for both data sets, and also make everything to lowercase. Remove numbers, remove punctuations, remove all white spaces, and remove all the stop words.
 ```{r}
 documents_raw_train = Corpus(VectorSource(doc_train))
 documents_raw_test = Corpus(VectorSource(doc_test))
@@ -655,7 +664,7 @@ test_documents = tm_map(test_documents, content_transformer(removePunctuation)) 
 test_documents = tm_map(test_documents, content_transformer(stripWhitespace)) ## remove excess white-space
 test_documents = tm_map(test_documents, content_transformer(removeWords), stopwords("en"))
 ```
-Step4. After breifly cleaned the data, we turn it into a matrix. We see the sparsity is very high, so we decied remove all elements which have more then sparse factir of 0.975. We then created matrixs using the revised data. In addition, we computed the TF-IDF test on both the test and train and turn it into a matrix.
+Step4: After breifly cleaned the data, we turn it into a matrix. We see the sparsity is very high, so we decided to remove all elements which have more then sparse factir of 0.975. We then created matrixs using the revised data. In addition, we computed the TF-IDF test on both the test and train and turn it into a matrix.
 ```{r}
 DTM_train = DocumentTermMatrix(my_documents)
 DTM_train = removeSparseTerms(DTM_train, 0.975)
@@ -672,7 +681,8 @@ nb_test = as.matrix(DTM_test)
 x_train = as.matrix(tfidf_train)
 x_test = as.matrix(tfidf_test)
 ```
-Step5. Our data is almost ready at this point, we then combined our author names and the word counts into one matrix and turned it into dataframe. We did the same thing again for author names and word count. One more step we did is to rename the author column for easier access.
+
+Step5: Our data is almost ready at this point, we then combined our author names and the word counts into one matrix and turned it into dataframe. We did the same thing again for author names and word count. One more step we did is to rename the author column for easier access.
 ```{r}
 train1 = cbind(x_train,train_authors)
 test1 = cbind(x_test,test_authors) 
@@ -690,7 +700,8 @@ names(nbtrain)[1601]<-"author_target"
 nbtest = as.data.frame(nb_test)
 names(nbtest)[1632]<-'author_target'
 ```
-Ste6. Our final step is to check for any missing words in the test sets using intersect function. 
+
+Step6: Our final step is to check for any missing words in the test sets using intersect function. 
 ```{r}
 intersection = intersect(names(train),names(test))
 train = train[,intersection]
@@ -701,7 +712,7 @@ nbtrain = nbtrain[,intersection]
 nbtest = nbtest[,intersection]
 ```
 
-Step7. After getting our code ready, we decied to preform a random forest to predict for the correct author. We tried 100,500,1000 trees, and 50, 80, 100 for m. Using 500 tree and m = 80 give us the best result without too much compelxity. So our best model accuracy is about 80.48%.
+Step7: After getting our code ready, we decied to perform a random forest to predict for the correct author. We tried 100,500,1000 trees, and 50, 80, 100 for m. Using 500 tree and m = 80 give us the best result without too much compelxity. So our best model accuracy is about 80.48%.
 ```{r}
 library(randomForest)
 set.seed(1)
@@ -710,7 +721,7 @@ rf.pred = predict(rf.fit, data=test)
 mean(rf.pred == test$author_target)
 ```
 
-Step8. We also tried the naive bayes method to test for accuracy, but we only got about 69% accuracy. 
+Step8: We also tried the naive bayes method to test for accuracy, but we only got about 69% accuracy. 
 ```{r}
 nb.fit = naiveBayes(y = factor(train_authors), x = nbtrain)
 nb.pred = predict(nb.fit, newdata = nbtest)
@@ -718,7 +729,6 @@ mean(nb.pred == test$author_target)
 ```
 
 Overall, Random Forest turns out to be the best model that we did; it give about 80% accuracy in predicting the right author.
-
 
 
 ## Association Rule Mining
@@ -733,6 +743,7 @@ groceriesrules = apriori(groceries,
 plot(groceriesrules)
 plot(groceriesrules, method='two-key plot')
 ```
+
 Step2: Reset lift, confidence and support.
 1) Set lift greater than 2.2 since the highest lift is around 3. Lift is important to determine if a certain product is more or less likely to be purchased with other products than a random draw. 
 2) Confidence greater than 0.4. Too small confidence gives us too many rules still.
