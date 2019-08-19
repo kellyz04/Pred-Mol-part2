@@ -8,14 +8,14 @@ Step1: Filter out the builidng with leasing rate less than 10%
 
     library(tidyverse)
 
-    ## -- Attaching packages ----------------------------------------------------------------------- tidyverse 1.2.1 --
+    ## -- Attaching packages ------------------------------------------------------------------------ tidyverse 1.2.1 --
 
     ## v ggplot2 3.2.0     v purrr   0.3.2
     ## v tibble  2.1.3     v dplyr   0.8.3
     ## v tidyr   0.8.3     v stringr 1.4.0
     ## v readr   1.3.1     v forcats 0.4.0
 
-    ## -- Conflicts -------------------------------------------------------------------------- tidyverse_conflicts() --
+    ## -- Conflicts --------------------------------------------------------------------------- tidyverse_conflicts() --
     ## x dplyr::filter() masks stats::filter()
     ## x dplyr::lag()    masks stats::lag()
 
@@ -74,7 +74,7 @@ with 10-20 stories is higher for non-green versus green
 
 ![](STA380_Exercises_files/figure-markdown_strict/unnamed-chunk-7-1.png)
 
-step7: Combine the effect of age and stories variable by filter out the
+Step7: Combine the effect of age and stories variable by filter out the
 buildings with age greater than 30 and stories less than 10 and greater
 than 20.
 
@@ -1027,6 +1027,7 @@ Step4: Combine VaR for three portfolios
     title("VaR For 3 Portfolio at 5% and 1%")
 
 ![](STA380_Exercises_files/figure-markdown_strict/unnamed-chunk-25-1.png)
+
 From the VaR at 5% and 1% for these 3 portfolios, we can see that the
 porfolio 2 loses most and covers the most risks and the porfolio 1 is
 the safest compared with other porfolios. Also, the value at risk is
@@ -1158,6 +1159,7 @@ Step 3: See how many clusters should we choose
     grid.arrange(clus2plot,clus4plot,clus6plot,clus8plot,ncol = 2,nrow=2)
 
 ![](STA380_Exercises_files/figure-markdown_strict/kmeans%20to%20see%20how%20many%20clusters%20should%20we%20choose-1.png)
+
 Compared to different clusters, we should choose 6 clusters which divide
 clearer clusters. Then we need to analyze each market and look into each
 interest for each cluster.
@@ -1482,7 +1484,7 @@ useful insights.
     ## Absolute minimum support count: 49 
     ## 
     ## set item appearances ...[0 item(s)] done [0.00s].
-    ## set transactions ...[169 item(s), 9835 transaction(s)] done [0.01s].
+    ## set transactions ...[169 item(s), 9835 transaction(s)] done [0.00s].
     ## sorting and recoding items ... [120 item(s)] done [0.00s].
     ## creating transaction tree ... done [0.00s].
     ## checking subsets of size 1 2 3 4
@@ -1491,7 +1493,7 @@ useful insights.
     ## = 0.1, : Mining stopped (maxlen reached). Only patterns up to a length of 4
     ## returned!
 
-    ##  done [0.01s].
+    ##  done [0.00s].
     ## writing ... [1582 rule(s)] done [0.00s].
     ## creating S4 object  ... done [0.00s].
 

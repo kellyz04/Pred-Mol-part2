@@ -45,7 +45,7 @@ df1<- df_greenbuildings%>%mutate(storiescut = cut(stories, c(0,10,20,30,40)))
 ggplot(data = df1) + geom_boxplot(aes(x= storiescut, y=Rent, fill = factor(green_rating)))+ theme_bw()
 ```
 
-step7: Combine the effect of age and stories variable by filter out the buildings with age greater than 30 and stories less than 10 and greater than 20. 
+Step7: Combine the effect of age and stories variable by filter out the buildings with age greater than 30 and stories less than 10 and greater than 20. 
 ```{r}
 df_greenbuildings <- df_greenbuildings[df_greenbuildings$age >-1 & df_greenbuildings$age<30,]
 df_greenbuildings <- df_greenbuildings[df_greenbuildings$stories >10 & df_greenbuildings$stories<20,]
@@ -344,6 +344,7 @@ mean(sim1[,n_days] > 100000)
 quantile(sim1[,n_days]- initial_wealth,.05)
 quantile(sim1[,n_days]- initial_wealth,.01)
 ```
+
 The mean of capital after 20 trading days is 100708.6 and we can earn an average rate of return of 0.7% for 20 trading days on our investment. In addition, we could earn returns at the 58% confidence. Considering the VaR, if the degree of risk preference and acceptance ability of our investors is 5%, portfolio 1 has a 5% VaR of 3128, which means that there is a 0.05 probability that the portfolio 1 will fall in value by more than 3128 in a 20 trading-day period. If the degree of risk preference and acceptance ability of our investors is 1%, portfolio 1 has a 1% VaR of 4396, which means that there is a 0.01 probability that the portfolio 1 will fall in value by more than 4396 in a 20 trading-day period. 
 
 Step2: Portfolio 2 is more aggressive. It contains two kinds of bonds, which are volitality and leverage bonds. Leverage bonds provide magnified exposure to popular fixed income benchmarks. They can generage amplified returns and also have higher risks. Volitality ETFs tend to move in the opposite direction of the broad market. Therefore, the portfolio 2 is supposed to win the market and win more when the market is down. However, it has to cover more risks as well whe nthe market is up.
@@ -415,6 +416,7 @@ mean(sim2[,n_days] > 100000)
 quantile(sim2[,n_days]-initial_wealth,.05)
 quantile(sim2[,n_days]-initial_wealth,.01)
 ```
+
 If we invest portfolio 2, the mean of capital is only 96862 for 20 trading days, which has the 3.1% loss. And there is only 34% probability to win. For investors at 5% of risk preference, the value in risk is more than 15539. For investors at 1% of risk preference, the value in risk is more than 17789. It only earns when the market is down, so we need to pay close attention to the broad market when investing this portfolio. 
 
 
@@ -488,6 +490,7 @@ mean(sim3[,n_days] > 100000)
 quantile(sim3[,n_days]- initial_wealth,.05)
 quantile(sim3[,n_days]- initial_wealth,.01)
 ```
+
 From the return and loss histogram, we know that the portfolio 3 is safer than portfolio 1 and 2, the most loss can only be 1500 and also the most earns can only less than 1200 approximately which follows the principle of low risk and low return. Also the correlationship between ETFs in porfolio 3, they have close relationship between each other since they are all issued by government agencies and varied simultaneously. For investors at 1% of risk preference, the value in risk is more than 1302.
 
 Step4: Combine VaR for three portfolios
@@ -504,6 +507,7 @@ barplot(VaR, beside = TRUE,legend=TRUE,col=c("darkblue","grey","orange"),cex.nam
 title("VaR For 3 Portfolio at 5% and 1%")
 
 ```
+
 From the VaR at 5% and 1% for these 3 portfolios, we can see that the porfolio 2 loses most and covers the most risks and the porfolio 1 is the safest compared with other porfolios. Also, the value at risk is also different by the lose probability. 1% lose probability will lose more compared with 5% lose probability. And the probability also represents the risk preference of investors. If the investors have low risk preference, it means that we need to consider high lose probability and the VaR turns out to be less. And we need to choose safer portfolio, like portfolio 1 or 2, in order to hedge risk as much as possible.
 
 ## Market segmentation
@@ -540,7 +544,6 @@ mu = attr(tweet_scaled,"scaled:center")
 sigma = attr(tweet_scaled,"scaled:scale")
 ```
 
-
 Step 3: See how many clusters should we choose
 ```{r kmeans to see how many clusters should we choose}
 set.seed(9)
@@ -570,6 +573,7 @@ clus8plot = fviz_cluster(clust8, data = tweet_scaled,
 
 grid.arrange(clus2plot,clus4plot,clus6plot,clus8plot,ncol = 2,nrow=2)
 ```
+
 Compared to different clusters, we should choose 6 clusters which divide clearer clusters. Then we need to analyze each market and look into each interest for each cluster.
 
 Step 4: Analyze each cluster
@@ -664,6 +668,7 @@ test_documents = tm_map(test_documents, content_transformer(removePunctuation)) 
 test_documents = tm_map(test_documents, content_transformer(stripWhitespace)) ## remove excess white-space
 test_documents = tm_map(test_documents, content_transformer(removeWords), stopwords("en"))
 ```
+
 Step4: After breifly cleaned the data, we turn it into a matrix. We see the sparsity is very high, so we decided to remove all elements which have more then sparse factir of 0.975. We then created matrixs using the revised data. In addition, we computed the TF-IDF test on both the test and train and turn it into a matrix.
 ```{r}
 DTM_train = DocumentTermMatrix(my_documents)
